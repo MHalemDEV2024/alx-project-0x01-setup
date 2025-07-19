@@ -1,4 +1,3 @@
-import { GetStaticProps } from 'next';
 import Header from '@/components/layout/Header';
 import UserCard from '@/components/common/UserCard';
 import { UserProps } from '@/interfaces';
@@ -13,7 +12,7 @@ const Users: React.FC<UsersPageProps> = ({ posts }) => {
       <Header />
       <main className="flex-grow bg-gray-100 py-8 px-4">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map((user) => (
+          {posts.map(user => (
             <UserCard key={user.id} {...user} />
           ))}
         </div>
@@ -22,16 +21,15 @@ const Users: React.FC<UsersPageProps> = ({ posts }) => {
   );
 };
 
-// ✅ Add correct type annotation
-export const getStaticProps: GetStaticProps<UsersPageProps> = async () => {
+export async function getStaticProps() {
   const response = await fetch('https://jsonplaceholder.typicode.com/users');
-  const posts: UserProps[] = await response.json();
+  const posts = await response.json();
 
   return {
     props: {
       posts,
     },
   };
-};
+}
 
 export default Users;
