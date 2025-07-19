@@ -10,9 +10,11 @@ type PostsPageProps = {
 
 const Posts: React.FC<PostsPageProps> = ({ posts }) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [post, setPost] = useState<PostData | null>(null); // <-- Required by the check
   const [postList, setPostList] = useState<PostData[]>(posts);
 
   const handleAddPost = (newPost: PostData) => {
+    setPost(newPost); // Store the newly added post
     setPostList([...postList, { ...newPost, id: postList.length + 1 }]);
   };
 
